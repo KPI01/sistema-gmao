@@ -1,3 +1,58 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@plugin "daisyui";
+
+@layer base {
+    input {
+        @apply border border-gray-300 !rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400 transition;
+    }
+
+    input[type="checkbox"] {
+        @apply w-5 h-5 text-blue-600 bg-white border-gray-300 rounded focus:ring-2 focus:ring-blue-400 transition cursor-pointer align-middle;
+    }
+
+    a {
+        @apply text-blue-600 hover:text-blue-800 underline transition-colors duration-200 cursor-pointer;
+        text-underline-offset: 3px;
+    }
+
+    label {
+        @apply block text-gray-700 font-medium mb-1;
+    }
+
+    button, input[type="submit"], input[type="button"] {
+        @apply shadow-sm rounded-md px-4 py-2 transition focus:outline-none;
+    }
+}
+
+@layer components {
+    .card {
+        @apply bg-white rounded-lg shadow-lg p-4 border-2 border-slate-200;
+    }
+
+    .card-header {
+        @apply border-b border-gray-200 pb-2 mb-4 font-semibold text-lg;
+    }
+
+    .card-body {
+        @apply mb-4;
+    }
+
+    .card-footer {
+        @apply border-t border-gray-200 pt-2 mt-4 text-right;
+    }
+
+    .input-group {
+        @apply flex flex-col items-start mb-4;
+    }
+
+    .checkbox-label {
+        @apply flex items-center space-x-2 cursor-pointer select-none;
+    }
+
+    .checkbox-label input[type="checkbox"] {
+        @apply mr-2;
+    }
+}

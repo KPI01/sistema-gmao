@@ -1,110 +1,65 @@
-import Checkbox from '@/Components/Checkbox';
-import InputError from '@/Components/InputError';
-import InputLabel from '@/Components/InputLabel';
-import PrimaryButton from '@/Components/PrimaryButton';
-import TextInput from '@/Components/TextInput';
-import GuestLayout from '@/Layouts/GuestLayout';
-import { Head, Link, useForm } from '@inertiajs/react';
-import { FormEventHandler } from 'react';
+import GuestLayout from "@/Layouts/GuestLayout"
+import { useForm } from "@inertiajs/react"
+import { FormEvent } from "react";
 
-export default function Login({
-    status,
-    canResetPassword,
-}: {
-    status?: string;
-    canResetPassword: boolean;
-}) {
-    const { data, setData, post, processing, errors, reset } = useForm({
-        email: '',
-        password: '',
-        remember: false as boolean,
-    });
+interface LoginData {
+    username: string;
+    password: string;
+    remember: boolean;
+}
 
-    const submit: FormEventHandler = (e) => {
-        e.preventDefault();
+function Login() {
+    const { data, setData, post } = useForm({
+            username: '',
+            password: '',
+            remember: false
+        } satisfies LoginData
+    )
+
+    const submit = (e: FormEvent) => {
+        e.preventDefault()
 
         post(route('login'), {
-            onFinish: () => reset('password'),
-        });
-    };
+            onFinish: () => setData({
+                username: '',
+                password: '',
+                remember: false
+            })
+        })
+    }
 
     return (
         <GuestLayout>
-            <Head title="Log in" />
-
-            {status && (
-                <div className="mb-4 text-sm font-medium text-green-600">
-                    {status}
+            <div className="card max-w-lg bg-slate-50">
+                <div className="card-header text-center">
+                    <h1 className="text-3xl font-bold">GMAO</h1>
+                    <span className="font-thin text-sm">Gestión de Mantenimiento Asistido por Ordenador</span>
                 </div>
-            )}
-
-            <form onSubmit={submit}>
-                <div>
-                    <InputLabel htmlFor="email" value="Email" />
-
-                    <TextInput
-                        id="email"
-                        type="email"
-                        name="email"
-                        value={data.email}
-                        className="mt-1 block w-full"
-                        autoComplete="username"
-                        isFocused={true}
-                        onChange={(e) => setData('email', e.target.value)}
-                    />
-
-                    <InputError message={errors.email} className="mt-2" />
+                <div className="card-body grid">
+                    <form onSubmit={submit}>
+                        <div className="input-group w-full">
+                            <label htmlFor="username">Nombre de usuario</label>
+                            <input className="w-72" type="text" autoComplete="username" value={data.username} onChange={e => setData('username', e.target.value)} />
+                        </div>
+                        <div className="input-group w-full">
+                            <label htmlFor="password">Clave</label>
+                            <input className="w-72 mb-1" type="text" autoComplete="password" value={data.password} onChange={e => setData('password', e.target.value)} />
+                            <span className="text-xs text-slate-600">
+                                ¿Has olvidado tu clave? <a href="#" className="text-blue-600">Pincha aquí</a>
+                            </span>
+                        </div>
+                        <div className="flex items-center gap-2">
+                            <input type="checkbox" name="remember" id="remember" />
+                            <label htmlFor="remember" className="select-none">Recordarme</label>
+                        </div>
+                        <div className="flex justify-end">
+                        <button type="submit" className="bg-slate-700 text-white font-semibold">Iniciar sesión</button>
+                        </div>
+                    </form> 
                 </div>
-
-                <div className="mt-4">
-                    <InputLabel htmlFor="password" value="Password" />
-
-                    <TextInput
-                        id="password"
-                        type="password"
-                        name="password"
-                        value={data.password}
-                        className="mt-1 block w-full"
-                        autoComplete="current-password"
-                        onChange={(e) => setData('password', e.target.value)}
-                    />
-
-                    <InputError message={errors.password} className="mt-2" />
-                </div>
-
-                <div className="mt-4 block">
-                    <label className="flex items-center">
-                        <Checkbox
-                            name="remember"
-                            checked={data.remember}
-                            onChange={(e) =>
-                                setData(
-                                    'remember',
-                                    (e.target.checked || false) as false,
-                                )
-                            }
-                        />
-                        <span className="ms-2 text-sm text-gray-600">
-                            Remember me
-                        </span>
-                    </label>
-                </div>
-
-                <div className="mt-4 flex items-center justify-end">
-                    {canResetPassword && (
-                        <Link
-                            href={route('password.request')}
-                            className="rounded-md text-sm text-gray-600 underline hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-                        >
-                            Forgot your password?
-                        </Link>
-                    )}
-
-                    <PrimaryButton className="ms-4" disabled={processing}>
-                        Log in
-                    </PrimaryButton>
-                </div>
-            </form>
+            </div>
         </GuestLayout>
-    );
+    )
 }
+
+export default Login
