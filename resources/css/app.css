@@ -22,7 +22,9 @@
         @apply block text-gray-700 font-medium mb-1;
     }
 
-    button, input[type="submit"], input[type="button"] {
+    button,
+    input[type="submit"],
+    input[type="button"] {
         @apply shadow-sm rounded-md px-4 py-2 transition focus:outline-none;
     }
 }
@@ -54,5 +56,22 @@
 
     .checkbox-label input[type="checkbox"] {
         @apply mr-2;
+    }
+
+    .dropdown-content {
+        @apply flex flex-col gap-y-2 z-50 min-w-[10rem] bg-white rounded-md shadow-lg border border-gray-200 py-2 mt-2 focus:outline-none;
+    }
+
+    .dropdown-item {
+        @apply px-4 py-2 text-gray-700 cursor-pointer transition-colors duration-150 hover:underline focus:underline focus:underline-offset-4 focus:outline-none;
+    }
+
+    .dropdown-item[aria-selected="true"],
+    .dropdown-item[data-state="active"] {
+        @apply underline text-blue-700;
+    }
+
+    .dropdown-separator {
+        @apply my-2 border-t border-gray-200;
     }
 }
