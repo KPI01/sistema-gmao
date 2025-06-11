@@ -1,11 +1,13 @@
 import { router, usePage } from "@inertiajs/react";
 import { PropsWithChildren } from "react";
 import { DropdownMenu } from "radix-ui";
+import { PageProps } from "@/types";
+import { ChevronDown } from "lucide-react";
 
 interface Props extends PropsWithChildren {}
 
 function AdminLayout({ children }: Props) {
-    const user = usePage().props.auth.user;
+    const { auth } = usePage<PageProps>().props;
 
     const handleLogout = () => {
         console.debug("Cerrando sesión...");
@@ -18,13 +20,14 @@ function AdminLayout({ children }: Props) {
             <nav className="min-h-full flex flex-col items-center justify-between gap-y-4 py-2 px-3 bg-gray-300 border-r-2 border-r-slate-400">
                 <h2 className="font-bold text-4xl mt-4">GMAO</h2>
                 <div className="text-right">
-                    Aqui van los elementos del menu
+                    <a href={route("incidence.index")}>Incidencias</a>
                 </div>
                 <div>
                     <DropdownMenu.Root>
-                        <DropdownMenu.Trigger asChild>
+                        <DropdownMenu.Trigger className="flex gap-x-2" asChild>
                             <button type="button" className="bg-slate-100">
-                                {user.name}
+                                {auth.user.name}
+                                <ChevronDown />
                             </button>
                         </DropdownMenu.Trigger>
 

@@ -1,5 +1,10 @@
-export interface User {
-    id: number;
+export interface BaseModel {
+    id: integer;
+    created_at: string;
+    updated_at: string;
+}
+
+export interface User extends BaseModel {
     name: string;
     username: string;
     email: string;
