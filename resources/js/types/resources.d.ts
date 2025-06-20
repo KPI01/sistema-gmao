@@ -1,4 +1,4 @@
-import { BaseModel } from ".";
+import { BaseModel, User } from ".";
 
 export interface Incidence extends BaseModel {
     description: string;
@@ -15,4 +15,9 @@ export interface Incidence extends BaseModel {
 export interface IncidenceWithRelations extends Incidence {
     creator: User;
     assigned_to?: User;
+}
+
+export interface IncidenceWithRelationsIds extends Incidence {
+    creator_id: number;
+    assigned_to_id?: number;
 }

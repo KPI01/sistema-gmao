@@ -19,7 +19,7 @@ class IncidenceFactory extends Factory
     public function definition(): array
     {
         $is_validated = $this->faker->boolean;
-        $is_closed = $this->faker->boolean;
+        $is_closed = $is_validated ? $this->faker->boolean : false;
 
         return [
             'creator_id' => User::inRandomOrder()->first()->id ?? null,

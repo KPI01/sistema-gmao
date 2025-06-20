@@ -52,6 +52,9 @@ class IncidenceController extends Controller
     public function edit(Incidence $incidence)
     {
         //
+        return inertia("Resources/Incidence/Edit", [
+            'incidence' => $incidence->makeVisible(['creator_id','assigned_to_id'])->load(['creator', 'assignedTo'])
+        ]);
     }
 
     /**

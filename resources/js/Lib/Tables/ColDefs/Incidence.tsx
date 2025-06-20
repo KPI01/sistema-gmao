@@ -37,7 +37,6 @@ export const incidenceColumns = [
     }),
     columnHelper.display({
         id: "actions",
-        header: "Acciones",
         cell: (info) => (
             <GoToBtn
                 to={route("incidence.show", info.row.original.id)}

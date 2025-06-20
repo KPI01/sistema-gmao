@@ -62,12 +62,6 @@ declare module 'ziggy-js' {
             "required": false
         }
     ],
-    "telescope": [
-        {
-            "name": "view",
-            "required": false
-        }
-    ],
     "dashboard": [],
     "profile.edit": [],
     "profile.update": [],
@@ -88,6 +82,13 @@ declare module 'ziggy-js' {
     "logout": [],
     "incidence.index": [],
     "incidence.show": [
+        {
+            "name": "incidence",
+            "required": true,
+            "binding": "id"
+        }
+    ],
+    "incidence.edit": [
         {
             "name": "incidence",
             "required": true,

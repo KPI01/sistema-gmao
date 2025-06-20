@@ -39,34 +39,41 @@ function Login() {
 
     return (
         <GuestLayout>
-            <div className="card max-w-lg bg-slate-50">
-                <div className="card-header text-center">
-                    <h1 className="text-3xl font-bold">GMAO</h1>
-                    <span className="font-thin text-sm">
-                        Gestión de Mantenimiento Asistido por Ordenador
-                    </span>
-                </div>
-                <div className="card-body grid">
-                    <form onSubmit={submit}>
-                        <div className="input-group w-full">
-                            <label htmlFor="username">Nombre de usuario</label>
+            <div className="card card-normal shadow-lg card-bordered bg-slate-50">
+                <div className="card-body">
+                    <div className="card-title flex flex-col">
+                        <h1 className="text-3xl font-bold">GMAO</h1>
+                        <span className="font-thin text-sm">
+                            Gestión de Mantenimiento Asistido por Ordenador
+                        </span>
+                    </div>
+                    <div className="divider"></div>
+                    <form className="grid gap-y-4" onSubmit={submit}>
+                        <label className="form-control w-full max-w-xs">
+                            <div className="label text-slate-900">
+                                <span className="label-text mb-2">
+                                    Nombre de usuario
+                                </span>
+                            </div>
                             <input
-                                className="w-full"
                                 type="text"
-                                autoComplete="username"
+                                className="input input-bordered w-full max-w-xs"
+                                placeholder="Usuario..."
                                 value={data.username}
                                 onChange={(e) =>
                                     setData("username", e.target.value)
                                 }
                             />
-                        </div>
-                        <div className="input-group w-full">
-                            <label htmlFor="password">Clave</label>
-                            <div className="flex gap-x-5">
+                        </label>
+                        <label className="form-control w-full max-w-xs">
+                            <div className="label text-slate-900">
+                                <span className="label-text mb-2">Clave</span>
+                            </div>
+                            <div className="flex items-center gap-x-4">
                                 <input
-                                    className="w-72 mb-1 basis-auto"
                                     type={showPassword ? "text" : "password"}
-                                    autoComplete="password"
+                                    className="input input-bordered w-full max-w-xs"
+                                    placeholder="********"
                                     value={data.password}
                                     onChange={(e) =>
                                         setData("password", e.target.value)
@@ -74,44 +81,36 @@ function Login() {
                                 />
                                 <button
                                     type="button"
-                                    className="bg-slate-200 border border-slate-400 w-10 h-10 p-0 hover:bg-slate-300"
+                                    className="btn btn-sm btn-ghost ms-auto"
                                     onClick={() => handlePasswordVisibility()}
                                 >
                                     {showPassword ? (
-                                        <EyeOff
-                                            size={20}
-                                            className="color-slate-950 m-auto hover:color-slate-800"
-                                        />
+                                        <EyeOff size={20} />
                                     ) : (
-                                        <Eye
-                                            size={20}
-                                            className="color-slate-950 m-auto hover:color-slate-800"
-                                        />
+                                        <Eye size={20} />
                                     )}
                                 </button>
                             </div>
-                            <span className="text-xs text-slate-600">
-                                ¿Has olvidado tu clave?{" "}
-                                <a href="#" className="text-blue-600">
-                                    Pincha aquí
-                                </a>
-                            </span>
-                        </div>
-                        <div className="flex items-center gap-2">
-                            <input
-                                type="checkbox"
-                                name="remember"
-                                id="remember"
-                            />
-                            <label htmlFor="remember" className="select-none">
-                                Recordarme
+                        </label>
+
+                        <span className="text-xs text-slate-600">
+                            ¿Has olvidado tu clave?{" "}
+                            <a href="#" className="text-blue-600">
+                                Pincha aquí
+                            </a>
+                        </span>
+                        <div className="form-control items-center">
+                            <label className="label cursor-pointer text-slate-900">
+                                <input
+                                    type="checkbox"
+                                    defaultChecked
+                                    className="checkbox checkbox-primary"
+                                />
+                                <span className="label-text">Recordarme</span>
                             </label>
                         </div>
                         <div className="flex justify-end">
-                            <button
-                                type="submit"
-                                className="bg-slate-700 text-white font-semibold"
-                            >
+                            <button type="submit" className="btn btn-primary">
                                 Iniciar sesión
                             </button>
                         </div>

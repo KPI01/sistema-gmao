@@ -9,7 +9,9 @@ interface Props {
 
 function Index({ data }: Props) {
     return (
-        <AdminLayout>
+        <AdminLayout containerClass="flex flex-col gap-y-4">
+            <h1 className="font-bold text-4xl">Incidencias</h1>
+            <hr />
             <Table columns={incidenceColumns} data={data} />
         </AdminLayout>
     );
