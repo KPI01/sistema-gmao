@@ -11,7 +11,7 @@ class UpdateIncidenceRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,25 @@ class UpdateIncidenceRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            "description" => ["required", "string", "max:255", "min:3"],
+            "observations" => ["nullable", "string", "max:255"],
+            "priority" => ["required", "integer", "min:1", "max:10"],
+        ];
+    }
+
+    public function messages(): array
+    {
+        return [
+            "description.required" => "La descripción es requerida",
+            "description.string" => "La descripción debe ser un texto",
+            "description.max" => "La descripción no puede exceder los 255 caracteres",
+            "description.min" => "La descripción debe tener al menos 3 caracteres",
+            "observations.string" => "Las observaciones deben ser un texto",
+            "observations.max" => "Las observaciones no pueden exceder los 255 caracteres",
+            "priority.required" => "La prioridad es requerida",
+            "priority.string" => "La prioridad debe ser numérica",
+            "priority.min" => "La prioridad no puede ser menor que 1",
+            "priority.max" => "La prioridad no puede ser mayor a 10",
         ];
     }
 }

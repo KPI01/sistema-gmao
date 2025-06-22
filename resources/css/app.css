@@ -4,3 +4,8 @@
 
 @plugin "daisyui";
 
+@layer base {
+    #app {
+        @apply min-h-screen ;
+    }
+}

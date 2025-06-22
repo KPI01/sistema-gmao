@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreIncidenceRequest;
+use App\Http\Requests\UpdateIncidenceCloseRequest;
 use App\Http\Requests\UpdateIncidenceRequest;
+use App\Http\Requests\UpdateIncidenceValidationRequest;
 use App\Models\Incidence;
 
 class IncidenceController extends Controller
@@ -53,7 +55,7 @@ class IncidenceController extends Controller
     {
         //
         return inertia("Resources/Incidence/Edit", [
-            'incidence' => $incidence->makeVisible(['creator_id','assigned_to_id'])->load(['creator', 'assignedTo'])
+            'incidence' => $incidence->makeVisible(['creator_id', 'assigned_to_id'])->load(['creator', 'assignedTo'])
         ]);
     }
 
@@ -63,6 +65,38 @@ class IncidenceController extends Controller
     public function update(UpdateIncidenceRequest $request, Incidence $incidence)
     {
         //
+        logger("Preparando la actualización de la incidencia...");
+        $validated = $request->validated();
+        logger("datos validados:", [$validated]);
+
+
+        $incidence->update($validated);
+        $incidence->refresh();
+
+        return redirect()->route('incidence.index')->with('success', 'La incidencia ha sido actualizada correctamente.');
+    }
+
+    public function validateIncidence(UpdateIncidenceValidationRequest $request, Incidence $incidence)
+    {
+        logger("Validación para la incidencia:", [$incidence->id]);
+
+        $validated = $request->validated();
+        logger("Datos validados:", [$validated]);
+
+        $incidence->update([...$validated, "validated_at" => now()]);
+
+        return redirect()->route('incidence.show', $incidence)->with('success', 'La incidencia ha sido validada correctamente.');
+    }
+    public function closeIncidence(UpdateIncidenceCloseRequest $request, Incidence $incidence)
+    {
+        logger("Validación para la incidencia:", [$incidence->id]);
+
+        $validated = $request->validated();
+        logger("Datos validados:", [$validated]);
+
+        $incidence->update([...$validated, "closed_at" => now()]);
+
+        return redirect()->route('incidence.show', $incidence)->with('success', 'La incidencia ha sido cerrada correctamente.');
     }
 
     /**
@@ -71,5 +105,7 @@ class IncidenceController extends Controller
     public function destroy(Incidence $incidence)
     {
         //
+        $incidence->delete();
+        return redirect()->route('incidence.index')->with('success', 'La incidencia ha sido eliminada correctamente.');
     }
 }

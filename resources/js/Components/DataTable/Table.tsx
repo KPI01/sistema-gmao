@@ -38,9 +38,9 @@ export function Table<T>({ data, columns, pageSize = 10 }: TableProps<T>) {
     });
 
     return (
-        <div className="overflow-x-auto">
-            <table className="table">
-                <thead>
+        <div className="overflow-x-auto max-h-[85%]">
+            <table className="table table-zebra max-h-full">
+                <thead className="sticky top-0 bg-base-100 border-b-4 border-base-600">
                     {table.getHeaderGroups().map((headerGroup) => (
                         <tr key={headerGroup.id}>
                             {headerGroup.headers.map((header) => (
@@ -105,7 +105,7 @@ export function Table<T>({ data, columns, pageSize = 10 }: TableProps<T>) {
                         </tr>
                     )}
                 </tbody>
-                <tfoot>
+                <tfoot className="sticky bottom-0 bg-base-100 border-t-4 border-base-600">
                     <tr>
                         <td colSpan={columns.length} className="py-2">
                             <div className="flex items-center justify-between">

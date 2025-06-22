@@ -1,3 +1,5 @@
+export type Method = 'get' | 'post' | 'put' | 'patch' | 'delete';
+
 export interface BaseModel {
     id: integer;
     created_at: string;

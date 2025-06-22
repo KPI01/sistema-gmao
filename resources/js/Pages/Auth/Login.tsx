@@ -39,25 +39,25 @@ function Login() {
 
     return (
         <GuestLayout>
-            <div className="card card-normal shadow-lg card-bordered bg-slate-50">
+            <div className="card card-normal shadow-lg card-bordered border-slate-300 bg-slate-100">
                 <div className="card-body">
                     <div className="card-title flex flex-col">
                         <h1 className="text-3xl font-bold">GMAO</h1>
-                        <span className="font-thin text-sm">
+                        <span className="font-thin text-md">
                             Gestión de Mantenimiento Asistido por Ordenador
                         </span>
                     </div>
                     <div className="divider"></div>
                     <form className="grid gap-y-4" onSubmit={submit}>
-                        <label className="form-control w-full max-w-xs">
+                        <label className="form-control w-full">
                             <div className="label text-slate-900">
-                                <span className="label-text mb-2">
+                                <span className="label-text mb-1 font-semibold">
                                     Nombre de usuario
                                 </span>
                             </div>
                             <input
                                 type="text"
-                                className="input input-bordered w-full max-w-xs"
+                                className="input input-bordered w-full"
                                 placeholder="Usuario..."
                                 value={data.username}
                                 onChange={(e) =>
@@ -65,14 +65,14 @@ function Login() {
                                 }
                             />
                         </label>
-                        <label className="form-control w-full max-w-xs">
+                        <label className="form-control w-full">
                             <div className="label text-slate-900">
-                                <span className="label-text mb-2">Clave</span>
+                                <span className="label-text mb-1 font-semibold">Clave</span>
                             </div>
                             <div className="flex items-center gap-x-4">
                                 <input
                                     type={showPassword ? "text" : "password"}
-                                    className="input input-bordered w-full max-w-xs"
+                                    className="input input-bordered w-full"
                                     placeholder="********"
                                     value={data.password}
                                     onChange={(e) =>
@@ -81,7 +81,7 @@ function Login() {
                                 />
                                 <button
                                     type="button"
-                                    className="btn btn-sm btn-ghost ms-auto"
+                                    className={"btn ms-auto " +( showPassword ? "btn-active btn-ghost shadow-gray-500 shadow-inner" : "btn-ghost") }
                                     onClick={() => handlePasswordVisibility()}
                                 >
                                     {showPassword ? (
@@ -99,8 +99,8 @@ function Login() {
                                 Pincha aquí
                             </a>
                         </span>
-                        <div className="form-control items-center">
-                            <label className="label cursor-pointer text-slate-900">
+                        <div className="form-control items-start">
+                            <label className="label cursor-pointer text-slate-900 gap-x-2">
                                 <input
                                     type="checkbox"
                                     defaultChecked

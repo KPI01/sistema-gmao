@@ -62,6 +62,12 @@ declare module 'ziggy-js' {
             "required": false
         }
     ],
+    "telescope": [
+        {
+            "name": "view",
+            "required": false
+        }
+    ],
     "dashboard": [],
     "profile.edit": [],
     "profile.update": [],
@@ -89,6 +95,34 @@ declare module 'ziggy-js' {
         }
     ],
     "incidence.edit": [
+        {
+            "name": "incidence",
+            "required": true,
+            "binding": "id"
+        }
+    ],
+    "incidence.update": [
+        {
+            "name": "incidence",
+            "required": true,
+            "binding": "id"
+        }
+    ],
+    "incidence.destroy": [
+        {
+            "name": "incidence",
+            "required": true,
+            "binding": "id"
+        }
+    ],
+    "incidence.validate": [
+        {
+            "name": "incidence",
+            "required": true,
+            "binding": "id"
+        }
+    ],
+    "incidence.close": [
         {
             "name": "incidence",
             "required": true,

@@ -1,7 +1,8 @@
+import DeleteButton from "@/Components/Resources/DeleteButton";
 import AdminLayout from "@/Layouts/Roles/AdminLayout";
 import { IncidenceWithRelations } from "@/types/resources";
-import { router } from "@inertiajs/react";
-import { Check, Cross, PenBox, X } from "lucide-react";
+import { router, useForm } from "@inertiajs/react";
+import { Check, PenBox, X } from "lucide-react";
 import { Tabs } from "radix-ui";
 
 interface Props {
@@ -16,13 +17,45 @@ function Show({ incidence }: Props) {
         });
     };
 
-    const handleIncidenceValidation = () => {};
+    const handleIncidenceValidation = () => {
+        if (incidence.is_validated) {
+            console.warn("La incidencia ya está validada.");
+            alert("La incidencia ya está validada.");
+            return;
+        }
 
-    const handleIncidenceClose = () => {};
+        router.put(
+            route("incidence.validate", incidence.id),
+            {
+                is_validated: true,
+            },
+            {
+                preserveScroll: true,
+            }
+        );
+    };
+
+    const handleIncidenceClose = () => {
+        if (incidence.is_closed) {
+            console.warn("La incidencia ya está cerrada.");
+            alert("La incidencia ya está cerrada.");
+            return;
+        }
+
+        router.put(
+            route("incidence.close", incidence.id),
+            {
+                is_closed: true,
+            },
+            {
+                preserveScroll: true,
+            }
+        );
+    };
 
     return (
         <AdminLayout>
-            <div className="card shadow-lg mx-auto">
+            <div className="card card-bordered border-2 border-slate-200 max-w-[70%] shadow-lg mx-auto">
                 <div className="card-body">
                     <div className="card-title flex-wrap">
                         <div className="flex w-full justify-between">
@@ -35,7 +68,7 @@ function Show({ incidence }: Props) {
                             <div id="actions" className="flex gap-x-2">
                                 {!incidence.is_closed ? (
                                     <button
-                                        className="btn btn-error"
+                                        className="btn btn-warning"
                                         onClick={handleIncidenceClose}
                                     >
                                         <X size={16} />
@@ -47,7 +80,9 @@ function Show({ incidence }: Props) {
                                 {!incidence.is_validated ? (
                                     <button
                                         className="btn btn-success"
-                                        onClick={handleIncidenceValidation}
+                                        onClick={() =>
+                                            handleIncidenceValidation()
+                                        }
                                     >
                                         <Check size={16} />
                                         Validar
@@ -56,19 +91,35 @@ function Show({ incidence }: Props) {
                                     ""
                                 )}
                                 <button
-                                    className="btn btn-info"
+                                    className="tooltip btn btn-info"
+                                    data-tip="Editar"
                                     onClick={handleEditRedirect}
                                 >
-                                    <PenBox size={16} />
+                                    <PenBox />
                                 </button>
+                                <DeleteButton
+                                    url={route(
+                                        "incidence.destroy",
+                                        incidence.id
+                                    )}
+                                >
+                                    ¿Estás seguro que deseas eliminar esta
+                                    incidencia? Una vez confirmes la
+                                    eliminación,{" "}
+                                    <span className="font-semibold text-red-600">
+                                        no se puede deshacer.
+                                    </span>
+                                </DeleteButton>
                             </div>
                         </div>
-                        <div className="basis-full flex gap-x-4">
+                        <div className="basis-full flex flex-col gap-y-2">
                             <div>
                                 <span className="font-bold">Estado: </span>
                                 <span>
                                     {!incidence.is_closed ? (
-                                        "Abierta"
+                                        <span className="text-yellow-600">
+                                            Abierta
+                                        </span>
                                     ) : (
                                         <span className="text-red-500">
                                             Cerrada
@@ -87,16 +138,22 @@ function Show({ incidence }: Props) {
                                     ""
                                 )}
                             </div>
-                            <div>
+                            <div className="flex items-center gap-x-2">
                                 <span className="font-bold">Validada: </span>
-                                <span>
-                                    {incidence.is_validated ? "Sí" : "No"}{" "}
-                                    {incidence.is_validated ? (
-                                        <>({incidence.validated_at})</>
-                                    ) : (
-                                        ""
-                                    )}
-                                </span>
+                                <input
+                                    type="checkbox"
+                                    className="checkbox checkbox-info checkbox-sm cursor-default"
+                                    checked={incidence.is_validated}
+                                />
+                                {incidence.is_validated ? (
+                                    <span>
+                                        (
+                                        {incidence.validated_at?.toLocaleString()}
+                                        )
+                                    </span>
+                                ) : (
+                                    ""
+                                )}
                             </div>
                         </div>
                     </div>
@@ -105,17 +162,20 @@ function Show({ incidence }: Props) {
                         className="mt-3"
                         defaultValue="details"
                     >
-                        <Tabs.List className="tabs">
-                            <Tabs.Trigger value="details" className="tab">
+                        <Tabs.List className="tabs tabs-boxed mx-8 mb-4">
+                            <Tabs.Trigger
+                                value="details"
+                                className="tab tab-active"
+                            >
                                 Detalles
                             </Tabs.Trigger>
                         </Tabs.List>
 
                         <Tabs.Content
                             value="details"
-                            className="px-4 grid grid-cols-2"
+                            className="px-4 grid grid-cols-[1fr_auto_1fr]"
                         >
-                            <div className="col-span-full grid grid-cols-2">
+                            <div>
                                 <div className="flex gap-x-2">
                                     <span className="font-semibold">
                                         Fecha de alta:
@@ -126,7 +186,7 @@ function Show({ incidence }: Props) {
                                         ).toLocaleString()}
                                     </span>
                                 </div>
-                                <div className="flex gap-x-2 justify-end">
+                                <div className="flex gap-x-2">
                                     <span className="font-semibold">
                                         Últ. modificación:
                                     </span>
@@ -143,11 +203,8 @@ function Show({ incidence }: Props) {
                                     <span>{incidence.creator.name}</span>
                                 </div>
                             </div>
-                            <hr className="col-span-full my-4" />
-                            <div className="col-span-full flex justify-between flex-wrap gap-x-2">
-                                <div className="basis-full font-bold mb-2">
-                                    Datos de recogida
-                                </div>
+                            <hr className="divider divider-horizontal" />
+                            <div>
                                 <div className="flex gap-x-2">
                                     <span className="font-semibold">
                                         Medio:

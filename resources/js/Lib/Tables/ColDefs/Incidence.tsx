@@ -1,10 +1,17 @@
 import { createColumnHelper } from "@tanstack/react-table";
 import { Incidence } from "@/types/resources";
-import GoToBtn from "@/Components/DataTable/GoToBtn";
+import RedirectButton from "@/Components/DataTable/RedirectButton";
+import { SquareArrowOutUpRight, Trash } from "lucide-react";
+import DeleteRow from "@/Components/DataTable/DeleteRow";
 
 const columnHelper = createColumnHelper<Incidence>();
 
 export const incidenceColumns = [
+    columnHelper.accessor("id", {
+        header: "Nro. de Incidencia",
+        cell: (info) => info.getValue(),
+        enableColumnFilter: true,
+    }),
     columnHelper.accessor("description", {
         header: "Descripción",
         cell: (info) => info.getValue(),
@@ -37,11 +44,15 @@ export const incidenceColumns = [
     }),
     columnHelper.display({
         id: "actions",
-        cell: (info) => (
-            <GoToBtn
-                to={route("incidence.show", info.row.original.id)}
-                label="Ver"
-            />
+        cell: ({ row }) => (
+            <div className="flex justify-end gap-x-2">
+                <RedirectButton
+                    url={route("incidence.show", row.original.id)}
+                    className="btn-secondary btn-xs"
+                >
+                    <SquareArrowOutUpRight size={16} />
+                </RedirectButton>
+            </div>
         ),
     }),
 ];

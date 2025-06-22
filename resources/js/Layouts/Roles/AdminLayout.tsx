@@ -7,16 +7,16 @@ interface Props extends PropsWithChildren {
 
 function AdminLayout({ children, containerClass }: Props) {
     return (
-        <div className="min-h-screen grid grid-cols-[13vw_auto]">
+        <div className="flex h-screen">
             <AdminNavigation />
-            <div
+            <main
                 id="content"
                 className={
-                    "py-3 px-6 min-w-full" + (children ? " " + containerClass : "")
+                    "py-3 px-6 w-full" + (children ? " " + containerClass : "")
                 }
             >
                 {children}
-            </div>
+            </main>
         </div>
     );
 }
