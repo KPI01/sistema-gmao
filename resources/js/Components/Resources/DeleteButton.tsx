@@ -15,7 +15,7 @@ function DeleteButton({ children, url }: DeleteButtonProps) {
 
     return (
         <AlertDialog.Root>
-            <AlertDialog.Trigger>
+            <AlertDialog.Trigger asChild>
                 <button className="tooltip btn btn-error" data-tip="Eliminar">
                     <Trash2 />
                 </button>

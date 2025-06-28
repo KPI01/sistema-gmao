@@ -25,6 +25,7 @@ class UpdateIncidenceRequest extends FormRequest
             "description" => ["required", "string", "max:255", "min:3"],
             "observations" => ["nullable", "string", "max:255"],
             "priority" => ["required", "integer", "min:1", "max:10"],
+            "assigned_to_id" => ["nullable", "exists:users,id"],
         ];
     }
 
@@ -41,6 +42,8 @@ class UpdateIncidenceRequest extends FormRequest
             "priority.string" => "La prioridad debe ser numérica",
             "priority.min" => "La prioridad no puede ser menor que 1",
             "priority.max" => "La prioridad no puede ser mayor a 10",
+            "assigned_to_id.exists" => "El usuario asignado no existe",
+            "assigned_to_id.integer" => "El usuario asignado debe ser un número entero",
         ];
     }
 }

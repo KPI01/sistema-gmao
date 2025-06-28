@@ -7,9 +7,9 @@ export interface Incidence extends BaseModel {
     priority: number;
     observations?: string;
     is_validated: boolean;
-    validated_at?: string | Date;
+    validated_at?: string;
     is_closed: boolean;
-    closed_at?: string | Date;
+    closed_at?: string;
 }
 
 export interface IncidenceWithRelations extends Incidence {

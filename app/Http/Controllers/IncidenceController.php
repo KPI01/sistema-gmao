@@ -7,6 +7,7 @@ use App\Http\Requests\UpdateIncidenceCloseRequest;
 use App\Http\Requests\UpdateIncidenceRequest;
 use App\Http\Requests\UpdateIncidenceValidationRequest;
 use App\Models\Incidence;
+use App\Models\User;
 
 class IncidenceController extends Controller
 {
@@ -43,8 +44,8 @@ class IncidenceController extends Controller
     public function show(Incidence $incidence)
     {
         //
-        return inertia('Resources/Incidence/Show', [
-            'incidence' => $incidence->load(['creator', 'assignedTo'])
+        return inertia("Resources/Incidence/Show", [
+            "incidence" => $incidence->load(["creator", "assignedTo"])
         ]);
     }
 
@@ -55,7 +56,12 @@ class IncidenceController extends Controller
     {
         //
         return inertia("Resources/Incidence/Edit", [
-            'incidence' => $incidence->makeVisible(['creator_id', 'assigned_to_id'])->load(['creator', 'assignedTo'])
+            "incidence" => $incidence->makeVisible(["creator_id", "assigned_to_id"])->load(["creator", "assignedTo"]),
+            "aux" => [
+                "users" => User::where("id", "!=", $incidence->assigned_to_id)
+                    ->get(["id", "name"])
+                    ->pluck("name", "id")
+            ]
         ]);
     }
 
@@ -65,23 +71,22 @@ class IncidenceController extends Controller
     public function update(UpdateIncidenceRequest $request, Incidence $incidence)
     {
         //
-        logger("Preparando la actualización de la incidencia...");
+        logger("preparing incidence for update...");
         $validated = $request->validated();
-        logger("datos validados:", [$validated]);
-
+        logger("validated data:", [$validated]);
 
         $incidence->update($validated);
         $incidence->refresh();
 
-        return redirect()->route('incidence.index')->with('success', 'La incidencia ha sido actualizada correctamente.');
+        return redirect()->route('incidence.show', $incidence)->with('success', 'La incidencia ha sido actualizada correctamente.');
     }
 
     public function validateIncidence(UpdateIncidenceValidationRequest $request, Incidence $incidence)
     {
-        logger("Validación para la incidencia:", [$incidence->id]);
+        logger("incidence to validate:", [$incidence->id]);
 
         $validated = $request->validated();
-        logger("Datos validados:", [$validated]);
+        logger("validated data:", [$validated]);
 
         $incidence->update([...$validated, "validated_at" => now()]);
 
@@ -89,10 +94,10 @@ class IncidenceController extends Controller
     }
     public function closeIncidence(UpdateIncidenceCloseRequest $request, Incidence $incidence)
     {
-        logger("Validación para la incidencia:", [$incidence->id]);
+        logger("incidence to close:", [$incidence->id]);
 
         $validated = $request->validated();
-        logger("Datos validados:", [$validated]);
+        logger("validated data:", [$validated]);
 
         $incidence->update([...$validated, "closed_at" => now()]);
 

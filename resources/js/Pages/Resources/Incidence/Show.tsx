@@ -219,28 +219,51 @@ function Show({ incidence }: Props) {
                                 </div>
                             </div>
                             <hr className="col-span-full my-4" />
-                            <div className="col-span-full flex flex-col gap-y-2">
-                                <span className="font-semibold">
-                                    Descripción:
-                                </span>
-                                <div className="rounded border border-slate-300 bg-slate-100 p-2">
-                                    <p>{incidence.description}</p>
+                            <div className="col-span-full grid space-y-2 w-full">
+                                <div className="col-span-full flex flex-col gap-y-2">
+                                    <span className="font-semibold">
+                                        Asignado a:
+                                    </span>
+                                    <input
+                                        type="text"
+                                        className="input input-bordered"
+                                        value={incidence.assigned_to?.name}
+                                        disabled
+                                    />
                                 </div>
-                            </div>
-                            <hr className="col-span-full my-4" />
-                            <div className="col-span-full flex flex-col gap-y-2">
-                                <span className="font-semibold">
-                                    Observaciones:
-                                </span>
-                                <div className="rounded border border-slate-300 bg-slate-100 p-2">
-                                    {incidence.observations &&
-                                    incidence.observations.length > 0 ? (
-                                        <p>{incidence.observations}</p>
-                                    ) : (
-                                        <p className="text-slate-400">
-                                            (Observaciones)
-                                        </p>
-                                    )}
+                                <div className="col-span-full flex flex-col gap-y-2">
+                                    <span className="font-semibold">
+                                        Prioridad:
+                                    </span>
+                                    <input
+                                        type="number"
+                                        className="input input-bordered"
+                                        value={incidence.priority}
+                                        disabled
+                                    />
+                                </div>
+                                <div className="col-span-full flex flex-col gap-y-2">
+                                    <span className="font-semibold">
+                                        Descripción:
+                                    </span>
+                                    <textarea
+                                        className="textarea textarea-bordered"
+                                        value={incidence.description}
+                                        disabled
+                                    />
+                                </div>
+                                <div className="col-span-full flex flex-col gap-y-2">
+                                    <span className="font-semibold">
+                                        Observaciones:
+                                    </span>
+                                    <textarea
+                                        className="textarea textarea-bordered"
+                                        value={
+                                            incidence.observations ??
+                                            "(Sin observaciones)"
+                                        }
+                                        disabled
+                                    />
                                 </div>
                             </div>
                         </Tabs.Content>

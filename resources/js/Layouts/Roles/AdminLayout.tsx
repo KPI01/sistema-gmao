@@ -7,7 +7,7 @@ interface Props extends PropsWithChildren {
 
 function AdminLayout({ children, containerClass }: Props) {
     return (
-        <div className="flex h-screen">
+        <div className="flex min-h-screen">
             <AdminNavigation />
             <main
                 id="content"
