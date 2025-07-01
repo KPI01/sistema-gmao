@@ -5,19 +5,29 @@ import { PropsWithChildren } from "react";
 
 interface DeleteButtonProps extends PropsWithChildren {
     url: string;
+    className?: string;
+    iconSize?: number;
 }
 
-function DeleteButton({ children, url }: DeleteButtonProps) {
+function DeleteButton({
+    children,
+    url,
+    className,
+    iconSize = 16,
+}: DeleteButtonProps) {
     const handleDeletion = () => {
-        console.debug("Eliminando recurso...");
+        console.debug("deleting resource...");
         router.delete(url, { preserveScroll: true });
     };
 
     return (
         <AlertDialog.Root>
             <AlertDialog.Trigger asChild>
-                <button className="tooltip btn btn-error" data-tip="Eliminar">
-                    <Trash2 />
+                <button
+                    className={`tooltip btn btn-error ${className}`}
+                    data-tip="Eliminar"
+                >
+                    <Trash2 size={iconSize} />
                 </button>
             </AlertDialog.Trigger>
             <AlertDialog.Portal>

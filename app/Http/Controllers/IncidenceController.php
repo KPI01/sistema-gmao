@@ -28,6 +28,13 @@ class IncidenceController extends Controller
     public function create()
     {
         //
+        return inertia("Resources/Incidence/Create", [
+            "aux" => [
+                "users" => User::all(["id","name"])
+                    ->pluck("name", "id"),
+                "incidence_count" => Incidence::count(),
+            ]
+        ]);
     }
 
     /**
@@ -36,6 +43,14 @@ class IncidenceController extends Controller
     public function store(StoreIncidenceRequest $request)
     {
         //
+        logger("preparing incidence for storage...");
+        $validated = $request->validated();
+        logger("validated data:", [$validated]);
+
+        $incidence = Incidence::create($validated);
+        logger("incidence created:", [$incidence->id]);
+
+        return redirect()->route('incidence.show', $incidence)->with('success', 'La incidencia ha sido creada correctamente.');
     }
 
     /**

@@ -1,3 +1,4 @@
+import { Card, CardTitle } from "@/Components/Card";
 import DeleteButton from "@/Components/Resources/DeleteButton";
 import AdminLayout from "@/Layouts/Roles/AdminLayout";
 import { IncidenceWithRelations } from "@/types/resources";
@@ -55,221 +56,207 @@ function Show({ incidence }: Props) {
 
     return (
         <AdminLayout>
-            <div className="card card-bordered border-2 border-slate-200 max-w-[70%] shadow-lg mx-auto">
-                <div className="card-body">
-                    <div className="card-title flex-wrap">
-                        <div className="flex w-full justify-between">
-                            <h1
-                                id="card-title"
-                                className="text-2xl font-bold mb-4"
-                            >
-                                Incidencia Nº {incidence.id}
-                            </h1>
-                            <div id="actions" className="flex gap-x-2">
-                                {!incidence.is_closed ? (
-                                    <button
-                                        className="btn btn-warning"
-                                        onClick={handleIncidenceClose}
-                                    >
-                                        <X size={16} />
-                                        Cerrar
-                                    </button>
-                                ) : (
-                                    ""
-                                )}
-                                {!incidence.is_validated ? (
-                                    <button
-                                        className="btn btn-success"
-                                        onClick={() =>
-                                            handleIncidenceValidation()
-                                        }
-                                    >
-                                        <Check size={16} />
-                                        Validar
-                                    </button>
-                                ) : (
-                                    ""
-                                )}
+            <Card>
+                <CardTitle>
+                    <div className="flex w-full justify-between">
+                        <h1 id="card-title" className="text-2xl font-bold mb-4">
+                            Incidencia Nº {incidence.id}
+                        </h1>
+                        <div id="actions" className="flex gap-x-2">
+                            {!incidence.is_closed ? (
                                 <button
-                                    className="tooltip btn btn-info"
-                                    data-tip="Editar"
-                                    onClick={handleEditRedirect}
+                                    className="btn btn-warning btn-sm"
+                                    onClick={handleIncidenceClose}
                                 >
-                                    <PenBox />
+                                    <X size={16} />
+                                    Cerrar
                                 </button>
-                                <DeleteButton
-                                    url={route(
-                                        "incidence.destroy",
-                                        incidence.id
-                                    )}
+                            ) : (
+                                ""
+                            )}
+                            {!incidence.is_validated ? (
+                                <button
+                                    className="btn btn-success btn-sm"
+                                    onClick={() => handleIncidenceValidation()}
                                 >
-                                    ¿Estás seguro que deseas eliminar esta
-                                    incidencia? Una vez confirmes la
-                                    eliminación,{" "}
-                                    <span className="font-semibold text-red-600">
-                                        no se puede deshacer.
-                                    </span>
-                                </DeleteButton>
-                            </div>
-                        </div>
-                        <div className="basis-full flex flex-col gap-y-2">
-                            <div>
-                                <span className="font-bold">Estado: </span>
-                                <span>
-                                    {!incidence.is_closed ? (
-                                        <span className="text-yellow-600">
-                                            Abierta
-                                        </span>
-                                    ) : (
-                                        <span className="text-red-500">
-                                            Cerrada
-                                        </span>
-                                    )}
+                                    <Check size={16} />
+                                    Validar
+                                </button>
+                            ) : (
+                                ""
+                            )}
+                            <button
+                                className="tooltip btn btn-info btn-sm"
+                                data-tip="Editar"
+                                onClick={handleEditRedirect}
+                            >
+                                <PenBox size={16}/>
+                            </button>
+                            <DeleteButton
+                            className="btn-sm"
+                                url={route("incidence.destroy", incidence.id)}
+                            >
+                                ¿Estás seguro que deseas eliminar esta
+                                incidencia? Una vez confirmes la eliminación,{" "}
+                                <span className="font-semibold text-red-600">
+                                    no se puede deshacer.
                                 </span>
-                                {incidence.is_closed && incidence.closed_at ? (
-                                    <span className="ml-2">
-                                        (Cerrada el{" "}
-                                        {new Date(
-                                            incidence.closed_at
-                                        ).toLocaleString()}
-                                        )
-                                    </span>
-                                ) : (
-                                    ""
-                                )}
-                            </div>
-                            <div className="flex items-center gap-x-2">
-                                <span className="font-bold">Validada: </span>
-                                <input
-                                    type="checkbox"
-                                    className="checkbox checkbox-info checkbox-sm cursor-default"
-                                    checked={incidence.is_validated}
-                                />
-                                {incidence.is_validated ? (
-                                    <span>
-                                        (
-                                        {incidence.validated_at?.toLocaleString()}
-                                        )
-                                    </span>
-                                ) : (
-                                    ""
-                                )}
-                            </div>
+                            </DeleteButton>
                         </div>
                     </div>
-                    <Tabs.Root
-                        id="card-body"
-                        className="mt-3"
-                        defaultValue="details"
-                    >
-                        <Tabs.List className="tabs tabs-boxed mx-8 mb-4">
-                            <Tabs.Trigger
-                                value="details"
-                                className="tab tab-active"
-                            >
-                                Detalles
-                            </Tabs.Trigger>
-                        </Tabs.List>
-
-                        <Tabs.Content
+                    <div className="basis-full flex flex-col gap-y-2">
+                        <div>
+                            <span className="font-bold">Estado: </span>
+                            <span>
+                                {!incidence.is_closed ? (
+                                    <span className="text-yellow-600">
+                                        Abierta
+                                    </span>
+                                ) : (
+                                    <span className="text-red-500">
+                                        Cerrada
+                                    </span>
+                                )}
+                            </span>
+                            {incidence.is_closed && incidence.closed_at ? (
+                                <span className="ml-2">
+                                    (Cerrada el{" "}
+                                    {new Date(
+                                        incidence.closed_at
+                                    ).toLocaleString()}
+                                    )
+                                </span>
+                            ) : (
+                                ""
+                            )}
+                        </div>
+                        <div className="flex items-center gap-x-2">
+                            <span className="font-bold">Validada: </span>
+                            <input
+                                type="checkbox"
+                                className="checkbox checkbox-info checkbox-sm cursor-default"
+                                checked={incidence.is_validated}
+                            />
+                            {incidence.is_validated ? (
+                                <span>
+                                    ({incidence.validated_at?.toLocaleString()})
+                                </span>
+                            ) : (
+                                ""
+                            )}
+                        </div>
+                    </div>
+                </CardTitle>
+                <Tabs.Root
+                    id="card-body"
+                    className="mt-3"
+                    defaultValue="details"
+                >
+                    <Tabs.List className="tabs tabs-boxed mx-8 mb-4">
+                        <Tabs.Trigger
                             value="details"
-                            className="px-4 grid grid-cols-[1fr_auto_1fr]"
+                            className="tab tab-active"
                         >
-                            <div>
-                                <div className="flex gap-x-2">
-                                    <span className="font-semibold">
-                                        Fecha de alta:
-                                    </span>
-                                    <span>
-                                        {new Date(
-                                            incidence.created_at
-                                        ).toLocaleString()}
-                                    </span>
-                                </div>
-                                <div className="flex gap-x-2">
-                                    <span className="font-semibold">
-                                        Últ. modificación:
-                                    </span>
-                                    <span>
-                                        {new Date(
-                                            incidence.created_at
-                                        ).toLocaleString()}
-                                    </span>
-                                </div>
-                                <div className="flex gap-x-2">
-                                    <span className="font-semibold">
-                                        Creada por:
-                                    </span>
-                                    <span>{incidence.creator.name}</span>
-                                </div>
+                            Detalles
+                        </Tabs.Trigger>
+                    </Tabs.List>
+
+                    <Tabs.Content
+                        value="details"
+                        className="px-4 grid grid-cols-[1fr_auto_1fr]"
+                    >
+                        <div>
+                            <div className="flex gap-x-2">
+                                <span className="font-semibold">
+                                    Fecha de alta:
+                                </span>
+                                <span>
+                                    {new Date(
+                                        incidence.created_at
+                                    ).toLocaleString()}
+                                </span>
                             </div>
-                            <hr className="divider divider-horizontal" />
-                            <div>
-                                <div className="flex gap-x-2">
-                                    <span className="font-semibold">
-                                        Medio:
-                                    </span>
-                                    <span>{incidence.origin}</span>
-                                </div>
-                                <div className="flex gap-x-2">
-                                    <span className="font-semibold">
-                                        Quien avisa:
-                                    </span>
-                                    <span>{incidence.notifier}</span>
-                                </div>
+                            <div className="flex gap-x-2">
+                                <span className="font-semibold">
+                                    Últ. modificación:
+                                </span>
+                                <span>
+                                    {new Date(
+                                        incidence.created_at
+                                    ).toLocaleString()}
+                                </span>
                             </div>
-                            <hr className="col-span-full my-4" />
-                            <div className="col-span-full grid space-y-2 w-full">
-                                <div className="col-span-full flex flex-col gap-y-2">
-                                    <span className="font-semibold">
-                                        Asignado a:
-                                    </span>
-                                    <input
-                                        type="text"
-                                        className="input input-bordered"
-                                        value={incidence.assigned_to?.name}
-                                        disabled
-                                    />
-                                </div>
-                                <div className="col-span-full flex flex-col gap-y-2">
-                                    <span className="font-semibold">
-                                        Prioridad:
-                                    </span>
-                                    <input
-                                        type="number"
-                                        className="input input-bordered"
-                                        value={incidence.priority}
-                                        disabled
-                                    />
-                                </div>
-                                <div className="col-span-full flex flex-col gap-y-2">
-                                    <span className="font-semibold">
-                                        Descripción:
-                                    </span>
-                                    <textarea
-                                        className="textarea textarea-bordered"
-                                        value={incidence.description}
-                                        disabled
-                                    />
-                                </div>
-                                <div className="col-span-full flex flex-col gap-y-2">
-                                    <span className="font-semibold">
-                                        Observaciones:
-                                    </span>
-                                    <textarea
-                                        className="textarea textarea-bordered"
-                                        value={
-                                            incidence.observations ??
-                                            "(Sin observaciones)"
-                                        }
-                                        disabled
-                                    />
-                                </div>
+                            <div className="flex gap-x-2">
+                                <span className="font-semibold">
+                                    Creada por:
+                                </span>
+                                <span>{incidence.creator.name}</span>
                             </div>
-                        </Tabs.Content>
-                    </Tabs.Root>
-                </div>
-            </div>
+                        </div>
+                        <hr className="divider divider-horizontal" />
+                        <div>
+                            <div className="flex gap-x-2">
+                                <span className="font-semibold">Medio:</span>
+                                <span>{incidence.origin}</span>
+                            </div>
+                            <div className="flex gap-x-2">
+                                <span className="font-semibold">
+                                    Quien avisa:
+                                </span>
+                                <span>{incidence.notifier}</span>
+                            </div>
+                        </div>
+                        <hr className="col-span-full my-4" />
+                        <div className="col-span-full grid space-y-2 w-full">
+                            <div className="col-span-full flex flex-col gap-y-2">
+                                <span className="font-semibold">
+                                    Asignado a:
+                                </span>
+                                <input
+                                    type="text"
+                                    className="input input-bordered"
+                                    value={incidence.assigned_to?.name}
+                                    disabled
+                                />
+                            </div>
+                            <div className="col-span-full flex flex-col gap-y-2">
+                                <span className="font-semibold">
+                                    Prioridad:
+                                </span>
+                                <input
+                                    type="number"
+                                    className="input input-bordered"
+                                    value={incidence.priority}
+                                    disabled
+                                />
+                            </div>
+                            <div className="col-span-full flex flex-col gap-y-2">
+                                <span className="font-semibold">
+                                    Descripción:
+                                </span>
+                                <textarea
+                                    className="textarea textarea-bordered"
+                                    value={incidence.description}
+                                    disabled
+                                />
+                            </div>
+                            <div className="col-span-full flex flex-col gap-y-2">
+                                <span className="font-semibold">
+                                    Observaciones:
+                                </span>
+                                <textarea
+                                    className="textarea textarea-bordered"
+                                    value={
+                                        incidence.observations ??
+                                        "(Sin observaciones)"
+                                    }
+                                    disabled
+                                />
+                            </div>
+                        </div>
+                    </Tabs.Content>
+                </Tabs.Root>
+            </Card>
         </AdminLayout>
     );
 }

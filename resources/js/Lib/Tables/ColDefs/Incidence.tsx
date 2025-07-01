@@ -48,7 +48,7 @@ export const incidenceColumns = [
             <div className="flex justify-end gap-x-2">
                 <RedirectButton
                     url={route("incidence.show", row.original.id)}
-                    className="btn-secondary btn-xs"
+                    className="btn-neutral btn-xs"
                 >
                     <SquareArrowOutUpRight size={16} />
                 </RedirectButton>

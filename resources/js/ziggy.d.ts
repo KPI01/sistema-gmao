@@ -87,6 +87,8 @@ declare module 'ziggy-js' {
     "password.update": [],
     "logout": [],
     "incidence.index": [],
+    "incidence.create": [],
+    "incidence.store": [],
     "incidence.show": [
         {
             "name": "incidence",

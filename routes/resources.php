@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth')->group(function () {
 
     Route::resource('incidence', IncidenceController::class)
-        ->only(['index', 'show', 'edit', 'destroy', 'update']);
+        ->only(['index', 'show', 'edit', 'destroy', 'update', 'create', 'store']);
     Route::put('incidence/{incidence}/validate', [IncidenceController::class, 'validateIncidence'])
         ->name('incidence.validate');
     Route::patch('incidence/{incidence}/validate', [IncidenceController::class, 'validateIncidence'])

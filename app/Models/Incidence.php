@@ -11,6 +11,15 @@ class Incidence extends Model
     //
     use HasFactory;
 
+    protected $attributes = [
+        "priority" => 0,
+        "is_closed" => false,
+        "is_validated" => false,
+        "observations" => null,
+        "closed_at" => null,
+        "validated_at" => null
+    ];
+
     protected $fillable = [
         'creator_id',
         'assigned_to_id',

@@ -11,7 +11,8 @@ export const Select = React.forwardRef<
     return (
         <SelectPrimitive.Root {...props}>
             <SelectPrimitive.Trigger
-                className="btn btn-ghost border-base-300 no-animation justify-between"
+                className="btn btn-ghost no-animation justify-between"
+                style={{ borderColor: "oklch(var(--bc)/0.2)" }}
                 ref={forwardedRef}
             >
                 <SelectPrimitive.Value />
@@ -20,11 +21,11 @@ export const Select = React.forwardRef<
                 </SelectPrimitive.Icon>
             </SelectPrimitive.Trigger>
             <SelectPrimitive.Portal>
-                <SelectPrimitive.Content className="bg-base-100 p-4 border border-base-300 rounded-lg shadow">
+                <SelectPrimitive.Content className="bg-base-100 p-4 border rounded-lg shadow">
                     <SelectPrimitive.ScrollUpButton>
                         <ChevronUp />
                     </SelectPrimitive.ScrollUpButton>
-                    <SelectPrimitive.Viewport className="space-y-3">
+                    <SelectPrimitive.Viewport className="space-y-4">
                         {children}
                     </SelectPrimitive.Viewport>
                     <SelectPrimitive.ScrollDownButton>
