@@ -1,8 +1,9 @@
 import { Card, CardTitle } from "@/Components/Card";
+import { Checkbox, CheckboxWithLabel } from "@/Components/Forms/Checkbox";
 import DeleteButton from "@/Components/Resources/DeleteButton";
 import AdminLayout from "@/Layouts/Roles/AdminLayout";
 import { IncidenceWithRelations } from "@/types/resources";
-import { router, useForm } from "@inertiajs/react";
+import { router } from "@inertiajs/react";
 import { Check, PenBox, X } from "lucide-react";
 import { Tabs } from "radix-ui";
 
@@ -59,7 +60,7 @@ function Show({ incidence }: Props) {
             <Card>
                 <CardTitle>
                     <div className="flex w-full justify-between">
-                        <h1 id="card-title" className="text-2xl font-bold mb-4">
+                        <h1 className="text-2xl font-bold mb-4">
                             Incidencia Nº {incidence.id}
                         </h1>
                         <div id="actions" className="flex gap-x-2">
@@ -90,10 +91,10 @@ function Show({ incidence }: Props) {
                                 data-tip="Editar"
                                 onClick={handleEditRedirect}
                             >
-                                <PenBox size={16}/>
+                                <PenBox size={16} />
                             </button>
                             <DeleteButton
-                            className="btn-sm"
+                                className="btn-sm"
                                 url={route("incidence.destroy", incidence.id)}
                             >
                                 ¿Estás seguro que deseas eliminar esta
@@ -132,14 +133,18 @@ function Show({ incidence }: Props) {
                         </div>
                         <div className="flex items-center gap-x-2">
                             <span className="font-bold">Validada: </span>
-                            <input
-                                type="checkbox"
-                                className="checkbox checkbox-info checkbox-sm cursor-default"
+                            <Checkbox
+                                className="checkbox-info checkbox-sm cursor-default"
                                 checked={incidence.is_validated}
                             />
-                            {incidence.is_validated ? (
+                            {incidence.is_validated &&
+                            incidence.validated_at ? (
                                 <span>
-                                    ({incidence.validated_at?.toLocaleString()})
+                                    (
+                                    {new Date(
+                                        incidence.validated_at
+                                    ).toLocaleString()}
+                                    )
                                 </span>
                             ) : (
                                 ""
