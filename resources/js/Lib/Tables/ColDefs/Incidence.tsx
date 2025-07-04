@@ -2,7 +2,6 @@ import { createColumnHelper } from "@tanstack/react-table";
 import { Incidence } from "@/types/resources";
 import RedirectButton from "@/Components/DataTable/RedirectButton";
 import { SquareArrowOutUpRight, Trash } from "lucide-react";
-import DeleteRow from "@/Components/DataTable/DeleteRow";
 
 const columnHelper = createColumnHelper<Incidence>();
 

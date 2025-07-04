@@ -11,7 +11,7 @@ const LINKS: Array<{ label: string; href: string }> = [
     },
     {
         label: "Usuarios",
-        href: "#",
+        href: route("user.index"),
     },
 ];
 

@@ -38,7 +38,7 @@ export function Table<T>({ data, columns, pageSize = 10 }: TableProps<T>) {
     });
 
     return (
-        <div className="overflow-x-auto max-h-[85%]">
+        <div className="overflow-x-auto h-full">
             <table className="table table-zebra max-h-full">
                 <thead className="sticky top-0 bg-base-100 border-b-4 border-base-600">
                     {table.getHeaderGroups().map((headerGroup) => (
