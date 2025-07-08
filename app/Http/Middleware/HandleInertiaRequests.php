@@ -2,6 +2,8 @@
 
 namespace App\Http\Middleware;
 
+use App\Models\Incidence;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Inertia\Middleware;
 
@@ -31,8 +33,25 @@ class HandleInertiaRequests extends Middleware
     {
         return [
             ...parent::share($request),
-            'auth' => [
-                'user' => $request->user(),
+            "auth" => [
+                "user" => $request->user(),
+                "can" => [
+                    "see" => [
+                        "incidence" => $request->user()?->can("view", Incidence::first()),
+                        "user" => $request->user()?->can("view", User::first()),
+                    ],
+                    "create" => [
+                        "incidence" => $request->user()?->can("create", Incidence::first())
+                    ],
+                    "update"=>[
+                        "incidence" => $request->user()?->can("update", Incidence::first()),
+                        "user" => $request->user()?->can("update", User::first())
+                    ],
+                    "delete" => [
+                        "incidence" => $request->user()?->can("delete", Incidence::first()),
+                        "user" => $request->user()?->can("delete", User::first())
+                    ]
+                ]
             ],
         ];
     }

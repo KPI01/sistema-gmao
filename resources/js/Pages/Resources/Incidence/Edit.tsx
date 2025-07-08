@@ -1,11 +1,11 @@
 import { Card, CardTitle } from "@/Components/Card";
 import { Select, SelectItem } from "@/Components/Forms/Select";
-import AdminLayout from "@/Layouts/Roles/AdminLayout";
+import Layout from "@/Layouts/Layout";
 import {
     IncidenceWithRelations,
     IncidenceWithRelationsIds,
 } from "@/types/resources";
-import { router, useForm } from "@inertiajs/react";
+import { router, useForm, usePage } from "@inertiajs/react";
 import { FormEvent } from "react";
 
 interface Props {
@@ -48,7 +48,7 @@ function Edit({ incidence, aux }: Props) {
     };
 
     return (
-        <AdminLayout>
+        <Layout>
             <Card>
                 <CardTitle>
                     <div className="flex basis-full justify-between">
@@ -292,7 +292,7 @@ function Edit({ incidence, aux }: Props) {
                     </div>
                 </form>
             </Card>
-        </AdminLayout>
+        </Layout>
     );
 }
 

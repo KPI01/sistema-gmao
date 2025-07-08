@@ -1,17 +1,21 @@
 import { Card, CardTitle } from "@/Components/Card";
-import { Checkbox, CheckboxWithLabel } from "@/Components/Forms/Checkbox";
+import { Checkbox } from "@/Components/Forms/Checkbox";
 import DeleteButton from "@/Components/Resources/DeleteButton";
-import AdminLayout from "@/Layouts/Roles/AdminLayout";
+import Layout from "@/Layouts/Layout";
 import { IncidenceWithRelations } from "@/types/resources";
-import { router } from "@inertiajs/react";
+import { router, usePage } from "@inertiajs/react";
 import { Check, PenBox, X } from "lucide-react";
 import { Tabs } from "radix-ui";
+import { useEffect } from "react";
 
 interface Props {
     incidence: IncidenceWithRelations;
 }
 
 function Show({ incidence }: Props) {
+    const { auth } = usePage().props;
+    const { can } = auth;
+
     const handleEditRedirect = () => {
         router.get(route("incidence.edit", incidence.id), {
             preserveState: true,
@@ -56,7 +60,7 @@ function Show({ incidence }: Props) {
     };
 
     return (
-        <AdminLayout>
+        <Layout>
             <Card>
                 <CardTitle>
                     <div className="flex w-full justify-between">
@@ -86,15 +90,22 @@ function Show({ incidence }: Props) {
                             ) : (
                                 ""
                             )}
-                            <button
-                                className="tooltip btn btn-info btn-sm"
-                                data-tip="Editar"
-                                onClick={handleEditRedirect}
-                            >
-                                <PenBox size={16} />
-                            </button>
+                            {can.update.incidence && (
+                                <button
+                                    className="tooltip btn btn-info btn-sm"
+                                    data-tip="Editar"
+                                    onClick={handleEditRedirect}
+                                >
+                                    <PenBox size={16} />
+                                </button>
+                            )}
+
                             <DeleteButton
-                                className="btn-sm"
+                                className={`btn-sm ${
+                                    can.delete.incidence
+                                        ? "inline-flex"
+                                        : "hidden"
+                                }`}
                                 url={route("incidence.destroy", incidence.id)}
                             >
                                 ¿Estás seguro que deseas eliminar esta
@@ -262,7 +273,7 @@ function Show({ incidence }: Props) {
                     </Tabs.Content>
                 </Tabs.Root>
             </Card>
-        </AdminLayout>
+        </Layout>
     );
 }
 

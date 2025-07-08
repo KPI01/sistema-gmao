@@ -8,6 +8,8 @@ use App\Http\Requests\UpdateIncidenceRequest;
 use App\Http\Requests\UpdateIncidenceValidationRequest;
 use App\Models\Incidence;
 use App\Models\User;
+use Illuminate\Http\Request;
+
 
 class IncidenceController extends Controller
 {
@@ -67,9 +69,15 @@ class IncidenceController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Incidence $incidence)
+    public function edit(Request $request, Incidence $incidence)
     {
         //
+        if (! $request->user()?->can("update", $incidence)) {
+            logger()->error("permisos insuficientes para acceder a este recurso", ["url"=>$request->url()]);
+
+            return back()->withErrors(["access" => "No tienes permisos para realizar esta acción"]);
+        };
+
         return inertia("Resources/Incidence/Edit", [
             "incidence" => $incidence->makeVisible(["creator_id", "assigned_to_id"])->load(["creator", "assignedTo"]),
             "aux" => [

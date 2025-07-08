@@ -28,12 +28,12 @@ interface AlertDialogCancelProps {
     className?: string;
 }
 
-interface AlertDialogActionProps
-    extends Partial<Omit<PropsWithoutRef<HTMLButtonElement>, "children">> {
-    children?: React.ReactNode;
+interface AlertDialogActionProps {
+    children: React.ReactNode;
+    className?: string;
 }
 
-interface AlertDialogProps {
+interface AlertDialogProps extends AD.AlertDialogProps {
     children?: React.ReactNode;
 }
 
@@ -57,18 +57,9 @@ function AlertDialogCancel({ children, className }: AlertDialogCancelProps) {
     );
 }
 
-function AlertDialogAction({
-    children,
-    className,
-    type = "button",
-    disabled = false,
-}: AlertDialogActionProps) {
+function AlertDialogAction({ children, className }: AlertDialogActionProps) {
     return (
-        <AD.Action
-            className={`btn btn-primary ${className}`}
-            type={type}
-            disabled={disabled}
-        >
+        <AD.Action className={`btn btn-primary ${className}`} asChild>
             {children}
         </AD.Action>
     );
@@ -97,8 +88,8 @@ function AlertDialogContent({ children, className }: AlertDialogContentProps) {
     );
 }
 
-function AlertDialog({ children }: AlertDialogProps) {
-    return <AD.Root>{children}</AD.Root>;
+function AlertDialog({ children, ...props }: AlertDialogProps) {
+    return <AD.Root {...props}>{children}</AD.Root>;
 }
 
 export {

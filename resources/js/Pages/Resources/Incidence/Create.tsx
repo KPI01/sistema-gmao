@@ -6,7 +6,7 @@ import {
     InputWithLabel,
 } from "@/Components/Forms/Input";
 import { Textarea } from "@/Components/Forms/Textarea";
-import AdminLayout from "@/Layouts/Roles/AdminLayout";
+import Layout from "@/Layouts/Layout";
 import { useForm, usePage } from "@inertiajs/react";
 import { FormEvent } from "react";
 
@@ -55,7 +55,7 @@ function Create({ aux }: Props) {
     };
 
     return (
-        <AdminLayout>
+        <Layout>
             <Card>
                 <CardTitle>
                     <h1 className="font-bold text-4xl">
@@ -184,7 +184,7 @@ function Create({ aux }: Props) {
                     </div>
                 </form>
             </Card>
-        </AdminLayout>
+        </Layout>
     );
 }
 
