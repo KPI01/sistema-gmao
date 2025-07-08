@@ -1,17 +1,17 @@
-import { MenuItem, RowMenu } from "@/Components/DataTable/RowMenu";
+import { MenuItem } from "@/Components/DataTable/RowMenu";
 import { User } from "@/types";
 import { createColumnHelper } from "@tanstack/react-table";
-import { Ellipsis } from "lucide-react";
+import {  SquareArrowOutUpRight } from "lucide-react";
 
 const columnHelper = createColumnHelper<User>();
 
-const menuOptions: MenuItem[] = [
-    { children: <button>Reestablecer contraseña</button> },
-    { children: <button>Editar usuario</button> },
-    { children: <button>Eliminar usuario</button> },
-];
+type UserColumn = ({
+    can,
+}: {
+    can: Record<string, Record<string, boolean>>;
+}) => Array<any>;
 
-export const userColumns = [
+export const userColumns: UserColumn = ({ can }) => [
     columnHelper.accessor("username", {
         header: "Nombre de Usuario",
         cell: (info) => info.getValue(),
@@ -29,6 +29,16 @@ export const userColumns = [
     }),
     columnHelper.display({
         id: "actions",
-        cell: ({ row }) => <RowMenu icon={<Ellipsis />} items={menuOptions} />,
+        cell: ({ row }) => (
+            <a
+                href={route(
+                    can.update ? "user.edit" : "user.show",
+                    row.original.id
+                )}
+                className="btn btn-sm btn-neutral"
+            >
+                <SquareArrowOutUpRight size={16} />
+            </a>
+        ),
     }),
 ];

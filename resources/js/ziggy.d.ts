@@ -74,19 +74,47 @@ declare module 'ziggy-js' {
     "profile.destroy": [],
     "register": [],
     "login": [],
-    "password.request": [],
-    "password.email": [],
-    "password.reset": [
+    "user.reset-password": [
         {
-            "name": "token",
-            "required": true
+            "name": "user",
+            "required": true,
+            "binding": "id"
         }
     ],
-    "password.store": [],
     "password.confirm": [],
     "password.update": [],
     "logout": [],
     "user.index": [],
+    "user.create": [],
+    "user.store": [],
+    "user.show": [
+        {
+            "name": "user",
+            "required": true,
+            "binding": "id"
+        }
+    ],
+    "user.edit": [
+        {
+            "name": "user",
+            "required": true,
+            "binding": "id"
+        }
+    ],
+    "user.update": [
+        {
+            "name": "user",
+            "required": true,
+            "binding": "id"
+        }
+    ],
+    "user.destroy": [
+        {
+            "name": "user",
+            "required": true,
+            "binding": "id"
+        }
+    ],
     "incidence.index": [],
     "incidence.create": [],
     "incidence.store": [],

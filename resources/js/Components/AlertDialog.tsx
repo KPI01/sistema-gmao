@@ -1,10 +1,9 @@
 import { AlertDialog as AD } from "radix-ui";
 import { Card } from "./Card";
-import { PropsWithoutRef } from "react";
 
 interface AlertDialogTriggerProps {
     children?: React.ReactNode;
-    clasName?: string;
+    className?: string;
     asChild?: boolean;
 }
 
@@ -39,11 +38,11 @@ interface AlertDialogProps extends AD.AlertDialogProps {
 
 function AlertDialogTrigger({
     children,
-    clasName,
+    className,
     asChild = false,
 }: AlertDialogTriggerProps) {
     return (
-        <AD.Trigger className={`btn ${clasName}`} asChild={asChild}>
+        <AD.Trigger className={`btn ${className}`} asChild={asChild}>
             {children}
         </AD.Trigger>
     );

@@ -1,4 +1,4 @@
-export type Method = 'get' | 'post' | 'put' | 'patch' | 'delete';
+export type Method = "get" | "post" | "put" | "patch" | "delete";
 
 export interface BaseModel {
     id: integer;
@@ -17,5 +17,11 @@ export type PageProps<
 > = T & {
     auth: {
         user: User;
+        can: {
+            see: Record<string, boolean>;
+            create: Record<string, boolean>;
+            update: Record<string, boolean>;
+            delete: Record<string, boolean>;
+        };
     };
 };

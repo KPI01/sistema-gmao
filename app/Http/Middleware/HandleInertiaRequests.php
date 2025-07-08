@@ -31,25 +31,29 @@ class HandleInertiaRequests extends Middleware
      */
     public function share(Request $request): array
     {
+        $userSample = User::first();
+        $incidenceSample = Incidence::first();
+
         return [
             ...parent::share($request),
             "auth" => [
                 "user" => $request->user(),
                 "can" => [
                     "see" => [
-                        "incidence" => $request->user()?->can("view", Incidence::first()),
-                        "user" => $request->user()?->can("view", User::first()),
+                        "incidence" => $request->user()?->can("view", $incidenceSample),
+                        "user" => $request->user()?->can("view", $userSample),
                     ],
                     "create" => [
-                        "incidence" => $request->user()?->can("create", Incidence::first())
+                        "incidence" => $request->user()?->can("create", $incidenceSample),
+                        "user" => $request->user()?->can("create", $userSample)
                     ],
                     "update"=>[
-                        "incidence" => $request->user()?->can("update", Incidence::first()),
-                        "user" => $request->user()?->can("update", User::first())
+                        "incidence" => $request->user()?->can("update", $incidenceSample),
+                        "user" => $request->user()?->can("update", $userSample)
                     ],
                     "delete" => [
-                        "incidence" => $request->user()?->can("delete", Incidence::first()),
-                        "user" => $request->user()?->can("delete", User::first())
+                        "incidence" => $request->user()?->can("delete", $incidenceSample),
+                        "user" => $request->user()?->can("delete", $userSample)
                     ]
                 ]
             ],

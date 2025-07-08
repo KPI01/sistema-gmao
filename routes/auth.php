@@ -2,9 +2,7 @@
 
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Auth\ConfirmablePasswordController;
-use App\Http\Controllers\Auth\NewPasswordController;
 use App\Http\Controllers\Auth\PasswordController;
-use App\Http\Controllers\Auth\PasswordResetLinkController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
@@ -23,11 +21,11 @@ Route::middleware('guest')->group(function () {
 });
 
 Route::middleware('auth')->group(function () {
-    Route::post('reset-password/{user}', [UserController::class, 'resetPassword'])
-        ->name('user.reset-password');
 
-    Route::get('confirm-password', [ConfirmablePasswordController::class, 'show'])
-        ->name('password.confirm');
+    Route::prefix("user")->group(function () {
+        Route::post("{user}/reset-password", [UserController::class, "resetPassword"])
+        ->name("user.reset-password");
+    });
 
     Route::post('confirm-password', [ConfirmablePasswordController::class, 'store']);
 
