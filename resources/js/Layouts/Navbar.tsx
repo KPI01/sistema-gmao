@@ -4,19 +4,54 @@ import { ChevronUp, LogOut, User } from "lucide-react";
 import { DropdownMenu } from "radix-ui";
 import { useState } from "react";
 
-const LINKS: Array<{ label: string; href: string }> = [
-    {
-        label: "Incidencias",
-        href: route("incidence.index"),
-    },
-    {
-        label: "Usuarios",
-        href: route("user.index"),
-    },
-];
+type NavItemProps = {
+    label: string;
+    onClick: () => void;
+    submenu?: Omit<NavItemProps, "submenu">[];
+};
 
-export function AdminNavigation({}) {
+function NavItem({ label, onClick, submenu }: NavItemProps) {
+    if (submenu && submenu.length > 0) {
+        return (
+            <DropdownMenu.Root>
+                <DropdownMenu.Trigger className="hover:font-semibold">
+                    {label}
+                </DropdownMenu.Trigger>
+                <DropdownMenu.Portal>
+                    <DropdownMenu.Content
+                        side="right"
+                        sideOffset={5}
+                        tabIndex={0}
+                        asChild
+                    >
+                        <ul className="menu dropdown-content text-slate-800 bg-base-100 rounded-box z-[1] w-44 p-2 shadow">
+                            {submenu.map((item, index) => (
+                                <NavItem
+                                    key={index}
+                                    label={item.label}
+                                    onClick={item.onClick}
+                                />
+                            ))}
+                        </ul>
+                    </DropdownMenu.Content>
+                </DropdownMenu.Portal>
+            </DropdownMenu.Root>
+        );
+    }
+
+    return (
+        <li className="hover:shadow-sm hover:shadow-white/10 rounded">
+            <a className="hover:font-semibold" onClick={onClick}>
+                {label}
+            </a>
+        </li>
+    );
+}
+
+export function Navigation() {
     const { auth } = usePage<PageProps>().props;
+    const { user, can } = auth;
+    console.debug("auth:", auth);
 
     const [dropdownOpen, setDropdownOpen] = useState(false);
 
@@ -30,19 +65,18 @@ export function AdminNavigation({}) {
             <h1 className="mt-4 font-bold text-4xl">GMAO</h1>
 
             <ul className="menu bg-transparent text-left text-xl gap-y-4">
-                {LINKS.map((link, index) => (
-                    <li
-                        key={index}
-                        className="hover:shadow-sm hover:shadow-white/10 rounded"
-                    >
-                        <a
-                            className="hover:font-semibold"
-                            onClick={() => handleRedirect(link.href)}
-                        >
-                            {link.label}
-                        </a>
-                    </li>
-                ))}
+                {can.see.incidence && (
+                    <NavItem
+                        label="Incidencias"
+                        onClick={() => handleRedirect(route("incidence.index"))}
+                    />
+                )}
+                {can.see.user && (
+                    <NavItem
+                        label="Usuarios"
+                        onClick={() => handleRedirect(route("user.index"))}
+                    />
+                )}
             </ul>
             <DropdownMenu.Root
                 open={dropdownOpen}
@@ -53,7 +87,7 @@ export function AdminNavigation({}) {
                     role="button"
                     className="btn m-1 mb-2"
                 >
-                    {auth.user.name}{" "}
+                    {user.name}{" "}
                     <ChevronUp
                         size={14}
                         className={`transition-transform ${
