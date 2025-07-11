@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Models\Asset;
 use App\Models\Incidence;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -33,6 +34,7 @@ class HandleInertiaRequests extends Middleware
     {
         $userSample = User::first();
         $incidenceSample = Incidence::first();
+        $assetSample = Asset::first();
 
         return [
             ...parent::share($request),
@@ -42,18 +44,22 @@ class HandleInertiaRequests extends Middleware
                     "see" => [
                         "incidence" => $request->user()?->can("view", $incidenceSample),
                         "user" => $request->user()?->can("view", $userSample),
+                        "asset" => $request->user()?->can("view", $assetSample),
                     ],
                     "create" => [
                         "incidence" => $request->user()?->can("create", $incidenceSample),
-                        "user" => $request->user()?->can("create", $userSample)
+                        "user" => $request->user()?->can("create", $userSample),
+                        "asset" => $request->user()?->can("create", $assetSample),
                     ],
                     "update"=>[
                         "incidence" => $request->user()?->can("update", $incidenceSample),
-                        "user" => $request->user()?->can("update", $userSample)
+                        "user" => $request->user()?->can("update", $userSample),
+                        "asset" => $request->user()?->can("update", $assetSample),
                     ],
                     "delete" => [
                         "incidence" => $request->user()?->can("delete", $incidenceSample),
-                        "user" => $request->user()?->can("delete", $userSample)
+                        "user" => $request->user()?->can("delete", $userSample),
+                        "asset" => $request->user()?->can("delete", $assetSample),
                     ]
                 ]
             ],

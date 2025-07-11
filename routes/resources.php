@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AssetController;
 use App\Http\Controllers\IncidenceController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
@@ -17,4 +18,6 @@ Route::middleware('auth')->group(function () {
         ->name('incidence.close');
     Route::patch('incidence/{incidence}/validate', [IncidenceController::class, 'closeIncidence'])
         ->name('incidence.close');
+
+    Route::resource("asset", AssetController::class);
 });

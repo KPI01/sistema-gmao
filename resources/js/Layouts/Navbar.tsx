@@ -1,5 +1,5 @@
 import { Method, PageProps } from "@/types";
-import { router, usePage } from "@inertiajs/react";
+import { Link, router, usePage } from "@inertiajs/react";
 import { ChevronUp, LogOut, User } from "lucide-react";
 import { DropdownMenu } from "radix-ui";
 import { useState } from "react";
@@ -71,6 +71,12 @@ export function Navigation() {
                         onClick={() => handleRedirect(route("incidence.index"))}
                     />
                 )}
+                {can.see.asset && (
+                    <NavItem
+                        label="Activos"
+                        onClick={() => handleRedirect(route("asset.index"))}
+                    />
+                )}
                 {can.see.user && (
                     <NavItem
                         label="Usuarios"
@@ -97,13 +103,11 @@ export function Navigation() {
                 </DropdownMenu.Trigger>
                 <DropdownMenu.Content sideOffset={5} tabIndex={0}>
                     <ul className="dropdown-content text-slate-800 menu bg-base-100 rounded-box z-[1] w-44 p-2 shadow">
-                        <li
-                            onClick={() =>
-                                handleRedirect(route("logout"), "post")
-                            }
-                        >
-                            <LogOut size={14} />
-                            Cerrar sesión
+                        <li>
+                            <Link href={route("logout")} method="post">
+                                <LogOut size={14} />
+                                Cerrar sesión
+                            </Link>
                         </li>
                         <li>
                             <a href="#">
