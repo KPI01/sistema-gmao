@@ -65,6 +65,34 @@
                 "group": "dev"
             }
         },
+        {
+            "label": "artisan: new model",
+            "type": "shell",
+            "command": "php artisan make:model -mcrR --policy",
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": true,
+                "panel": "dedicated",
+                "showReuseMessage": true,
+                "clear": false,
+                "group": "dev"
+            }
+        },
+        {
+            "label": "artisan: migrate",
+            "type": "shell",
+            "command": "php artisan migrate",
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": true,
+                "panel": "dedicated",
+                "showReuseMessage": true,
+                "clear": false,
+                "group": "dev"
+            }
+        }
     ],
     "inputs": [
         {
@@ -72,6 +100,11 @@
             "type": "promptString",
             "description": "Enter the name of the seeder class to use",
             "default": "DatabaseSeeder"
+        },
+        {
+            "id": "modelName",
+            "type": "promptString",
+            "description": "Enter the name for the model to create"
         }
     ]
 }

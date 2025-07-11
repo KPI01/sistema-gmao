@@ -81,7 +81,6 @@ declare module 'ziggy-js' {
             "binding": "id"
         }
     ],
-    "password.confirm": [],
     "password.update": [],
     "logout": [],
     "user.index": [],
@@ -156,6 +155,37 @@ declare module 'ziggy-js' {
     "incidence.close": [
         {
             "name": "incidence",
+            "required": true,
+            "binding": "id"
+        }
+    ],
+    "asset.index": [],
+    "asset.create": [],
+    "asset.store": [],
+    "asset.show": [
+        {
+            "name": "asset",
+            "required": true,
+            "binding": "id"
+        }
+    ],
+    "asset.edit": [
+        {
+            "name": "asset",
+            "required": true,
+            "binding": "id"
+        }
+    ],
+    "asset.update": [
+        {
+            "name": "asset",
+            "required": true,
+            "binding": "id"
+        }
+    ],
+    "asset.destroy": [
+        {
+            "name": "asset",
             "required": true,
             "binding": "id"
         }
