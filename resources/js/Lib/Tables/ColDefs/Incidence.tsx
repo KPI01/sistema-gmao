@@ -1,7 +1,7 @@
 import { createColumnHelper } from "@tanstack/react-table";
 import { Incidence } from "@/types/resources";
 import RedirectButton from "@/Components/DataTable/RedirectButton";
-import { SquareArrowOutUpRight, Trash } from "lucide-react";
+import { SquareArrowOutUpRight } from "lucide-react";
 
 const columnHelper = createColumnHelper<Incidence>();
 
