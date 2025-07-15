@@ -19,5 +19,11 @@ class Asset extends Model
         "manufacturer",
         "is_active",
         "observations",
+        "location_id",
     ];
+
+    public function location()
+    {
+        return $this->belongsTo(Location::class, 'location_id');
+    }
 }

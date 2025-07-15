@@ -51,7 +51,7 @@ class HandleInertiaRequests extends Middleware
                         "user" => $request->user()?->can("create", $userSample),
                         "asset" => $request->user()?->can("create", $assetSample),
                     ],
-                    "update"=>[
+                    "update" => [
                         "incidence" => $request->user()?->can("update", $incidenceSample),
                         "user" => $request->user()?->can("update", $userSample),
                         "asset" => $request->user()?->can("update", $assetSample),
